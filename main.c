@@ -5,7 +5,7 @@
 #include "read_mem.h"
 
 
-#define TEST_ON (16*1024*1024*1024L)
+#define TEST_ON (4*1024*1024*1024L)
 #define SIZE_FROM (16*1024)
 #define SIZE_TO (16*1024*1024L)
 
