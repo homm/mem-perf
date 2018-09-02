@@ -36,12 +36,12 @@ read_mem_native_opt(uint64_t* src, size_t size)
 extern uint64_t
 read_mem_avx2(uint64_t* src, size_t size)
 {
-    size_t i = 0;
     __m256i result0 = _mm256_setzero_si256();
     __m128i temp;
+    __m256i* mm_src = (__m256i*) (src+0);
 
-    for (; i < size; i += 4) {
-        result0 = _mm256_xor_si256(result0, *(__m256i*) (src + i));
+    for (; mm_src < (__m256i*) (src+size); mm_src += 1) {
+        result0 = _mm256_xor_si256(result0, mm_src[0]);
     }
 
     temp = _mm_xor_si128(
@@ -54,7 +54,6 @@ read_mem_avx2(uint64_t* src, size_t size)
 extern uint64_t
 read_mem_avx2_opt(uint64_t* src, size_t size)
 {
-    size_t i = 0;
     __m256i result0 = _mm256_setzero_si256();
     __m256i result1 = _mm256_setzero_si256();
     __m256i result2 = _mm256_setzero_si256();
@@ -66,7 +65,7 @@ read_mem_avx2_opt(uint64_t* src, size_t size)
     __m128i temp;
     __m256i* mm_src = (__m256i*) (src+0);
 
-    for (; i < size; i += 32) {
+    for (; mm_src < (__m256i*) (src+size); mm_src += 8) {
         result0 = _mm256_xor_si256(result0, mm_src[0]);
         result1 = _mm256_xor_si256(result1, mm_src[1]);
         result2 = _mm256_xor_si256(result2, mm_src[2]);
@@ -75,7 +74,6 @@ read_mem_avx2_opt(uint64_t* src, size_t size)
         result5 = _mm256_xor_si256(result5, mm_src[5]);
         result6 = _mm256_xor_si256(result6, mm_src[6]);
         result7 = _mm256_xor_si256(result7, mm_src[7]);
-        mm_src += 8;
     }
 
     result0 = _mm256_xor_si256(
