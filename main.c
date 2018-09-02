@@ -23,45 +23,6 @@ int main(int argc, char *argv[])
             uint64_t best_value = 0;
             time_t current = clock();
             for (i = 0; i < passes; i++) {
-                best_value ^= read_mem_native(src, size / sizeof(uint64_t));
-            }
-            current = clock() - current;
-            {
-                double speed = TEST_ON/1024/1024 / ((double)current) * CLOCKS_PER_SEC;
-                printf(">>> %" PRIu64 " %zu %.2f MB/s\n",
-                    best_value, size, speed);
-            }
-        }
-        {
-            uint64_t best_value = 0;
-            time_t current = clock();
-            for (i = 0; i < passes; i++) {
-                best_value ^= read_mem_native_opt(src, size / sizeof(uint64_t));
-            }
-            current = clock() - current;
-            {
-                double speed = TEST_ON/1024/1024 / ((double)current) * CLOCKS_PER_SEC;
-                printf(">>> %" PRIu64 " %zu %.2f MB/s\n",
-                    best_value, size, speed);
-            }
-        }
-        {
-            uint64_t best_value = 0;
-            time_t current = clock();
-            for (i = 0; i < passes; i++) {
-                best_value ^= read_mem_avx2(src, size / sizeof(uint64_t));
-            }
-            current = clock() - current;
-            {
-                double speed = TEST_ON/1024/1024 / ((double)current) * CLOCKS_PER_SEC;
-                printf(">>> %" PRIu64 " %zu %.2f MB/s\n",
-                    best_value, size, speed);
-            }
-        }
-        {
-            uint64_t best_value = 0;
-            time_t current = clock();
-            for (i = 0; i < passes; i++) {
                 best_value ^= read_mem_avx2_opt(src, size / sizeof(uint64_t));
             }
             current = clock() - current;
@@ -71,7 +32,6 @@ int main(int argc, char *argv[])
                     best_value, size, speed);
             }
         }
-        printf("\n");
         free(src);
     }
     return 0;
