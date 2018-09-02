@@ -59,20 +59,32 @@ read_mem_avx2_opt(uint64_t* src, size_t size)
     __m256i result1 = _mm256_setzero_si256();
     __m256i result2 = _mm256_setzero_si256();
     __m256i result3 = _mm256_setzero_si256();
+    __m256i result4 = _mm256_setzero_si256();
+    __m256i result5 = _mm256_setzero_si256();
+    __m256i result6 = _mm256_setzero_si256();
+    __m256i result7 = _mm256_setzero_si256();
     __m128i temp;
     __m256i* mm_src = (__m256i*) (src+0);
 
-    for (; i < size; i += 16) {
+    for (; i < size; i += 32) {
         result0 = _mm256_xor_si256(result0, mm_src[0]);
         result1 = _mm256_xor_si256(result1, mm_src[1]);
         result2 = _mm256_xor_si256(result2, mm_src[2]);
         result3 = _mm256_xor_si256(result3, mm_src[3]);
-        mm_src += 4;
+        result4 = _mm256_xor_si256(result4, mm_src[4]);
+        result5 = _mm256_xor_si256(result5, mm_src[5]);
+        result6 = _mm256_xor_si256(result6, mm_src[6]);
+        result7 = _mm256_xor_si256(result7, mm_src[7]);
+        mm_src += 8;
     }
 
     result0 = _mm256_xor_si256(
-        _mm256_xor_si256(result0, result2),
-        _mm256_xor_si256(result1, result3));
+        _mm256_xor_si256(
+            _mm256_xor_si256(result0, result2),
+            _mm256_xor_si256(result1, result3)),
+        _mm256_xor_si256(
+            _mm256_xor_si256(result4, result6),
+            _mm256_xor_si256(result5, result7)));
 
     temp = _mm_xor_si128(
         _mm256_castsi256_si128(result0),
