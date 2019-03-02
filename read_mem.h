@@ -6,6 +6,7 @@ extern read_mem_func read_mem_native;
 extern read_mem_func read_mem_native_opt;
 extern read_mem_func read_mem_avx2;
 extern read_mem_func read_mem_avx2_opt;
+extern read_mem_func comppute_mem_avx2;
 
 extern void
 fill_mem(void* src, size_t size);

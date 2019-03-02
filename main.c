@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         void* src = calloc(1, size);
         fill_mem(src, size);
         {
-            double speed = run_passes(passes, read_mem_avx2_opt, src, size);
+            double speed = run_passes(passes, comppute_mem_avx2, src, size);
             printf(">>> %zu %.0f MB/s\n", size, speed);
         }
         free(src);
