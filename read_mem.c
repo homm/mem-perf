@@ -94,10 +94,10 @@ comppute_mem_avx2(uint64_t* src, size_t size)
     __m256i* mm_src = (__m256i*) (src+0);
 
     for (; mm_src < (__m256i*) (src+size); mm_src += 4) {
-        result0 = _mm256_xor_si256(result0, rgbA2rgba(mm_src[0]));
-        result1 = _mm256_xor_si256(result1, rgbA2rgba(mm_src[1]));
-        result2 = _mm256_xor_si256(result2, rgbA2rgba(mm_src[2]));
-        result3 = _mm256_xor_si256(result3, rgbA2rgba(mm_src[3]));
+        result0 = _mm256_xor_si256(result0, rgbA2rgba(_mm256_loadu_si256(mm_src + 0)));
+        result1 = _mm256_xor_si256(result1, rgbA2rgba(_mm256_loadu_si256(mm_src + 1)));
+        result2 = _mm256_xor_si256(result2, rgbA2rgba(_mm256_loadu_si256(mm_src + 2)));
+        result3 = _mm256_xor_si256(result3, rgbA2rgba(_mm256_loadu_si256(mm_src + 3)));
     }
 
     result0 = _mm256_xor_si256(
