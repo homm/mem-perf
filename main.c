@@ -5,7 +5,7 @@
 
 
 #define TEST_ON (16*1024*1024*1024L)
-#define SIZE_FROM (16*1024)
+#define SIZE_FROM (8*1024)
 #define SIZE_TO (32*1024*1024L)
 
 
