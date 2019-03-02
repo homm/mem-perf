@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         fill_mem(src, size);
         {
             double speed = run_passes(passes, read_mem_avx2_opt, src, size);
-            printf(">>> %zu %.2f MB/s\n", size, speed);
+            printf(">>> %zu %.0f MB/s\n", size, speed);
         }
         free(src);
     }
